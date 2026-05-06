@@ -16,6 +16,12 @@ import { Route as AppManagerIndexRouteImport } from './routes/app/manager/index'
 import { Route as AppHrIndexRouteImport } from './routes/app/hr/index'
 import { Route as AppFinanceIndexRouteImport } from './routes/app/finance/index'
 import { Route as AppEmployeeIndexRouteImport } from './routes/app/employee/index'
+import { Route as AppAdminIndexRouteImport } from './routes/app/admin/index'
+import { Route as AppManagerTeamRouteImport } from './routes/app/manager/team'
+import { Route as AppManagerPayrollSummaryRouteImport } from './routes/app/manager/payroll-summary'
+import { Route as AppManagerLeaveApprovalRouteImport } from './routes/app/manager/leave-approval'
+import { Route as AppManagerEvaluationRouteImport } from './routes/app/manager/evaluation'
+import { Route as AppManagerAttendanceRouteImport } from './routes/app/manager/attendance'
 import { Route as AppHrReportsRouteImport } from './routes/app/hr/reports'
 import { Route as AppHrPayrollRouteImport } from './routes/app/hr/payroll'
 import { Route as AppHrLeaveRouteImport } from './routes/app/hr/leave'
@@ -28,6 +34,7 @@ import { Route as AppEmployeePayslipRouteImport } from './routes/app/employee/pa
 import { Route as AppEmployeePayrollHistoryRouteImport } from './routes/app/employee/payroll-history'
 import { Route as AppEmployeeLeaveRouteImport } from './routes/app/employee/leave'
 import { Route as AppEmployeeAttendanceRouteImport } from './routes/app/employee/attendance'
+import { Route as AppAdminUsersRouteImport } from './routes/app/admin/users'
 
 const AppRoute = AppRouteImport.update({
   id: '/app',
@@ -62,6 +69,37 @@ const AppFinanceIndexRoute = AppFinanceIndexRouteImport.update({
 const AppEmployeeIndexRoute = AppEmployeeIndexRouteImport.update({
   id: '/employee/',
   path: '/employee/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdminIndexRoute = AppAdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppManagerTeamRoute = AppManagerTeamRouteImport.update({
+  id: '/manager/team',
+  path: '/manager/team',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppManagerPayrollSummaryRoute =
+  AppManagerPayrollSummaryRouteImport.update({
+    id: '/manager/payroll-summary',
+    path: '/manager/payroll-summary',
+    getParentRoute: () => AppRoute,
+  } as any)
+const AppManagerLeaveApprovalRoute = AppManagerLeaveApprovalRouteImport.update({
+  id: '/manager/leave-approval',
+  path: '/manager/leave-approval',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppManagerEvaluationRoute = AppManagerEvaluationRouteImport.update({
+  id: '/manager/evaluation',
+  path: '/manager/evaluation',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppManagerAttendanceRoute = AppManagerAttendanceRouteImport.update({
+  id: '/manager/attendance',
+  path: '/manager/attendance',
   getParentRoute: () => AppRoute,
 } as any)
 const AppHrReportsRoute = AppHrReportsRouteImport.update({
@@ -125,11 +163,17 @@ const AppEmployeeAttendanceRoute = AppEmployeeAttendanceRouteImport.update({
   path: '/employee/attendance',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAdminUsersRoute = AppAdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/app/profile': typeof AppProfileRoute
+  '/app/admin/users': typeof AppAdminUsersRoute
   '/app/employee/attendance': typeof AppEmployeeAttendanceRoute
   '/app/employee/leave': typeof AppEmployeeLeaveRoute
   '/app/employee/payroll-history': typeof AppEmployeePayrollHistoryRoute
@@ -142,6 +186,12 @@ export interface FileRoutesByFullPath {
   '/app/hr/leave': typeof AppHrLeaveRoute
   '/app/hr/payroll': typeof AppHrPayrollRoute
   '/app/hr/reports': typeof AppHrReportsRoute
+  '/app/manager/attendance': typeof AppManagerAttendanceRoute
+  '/app/manager/evaluation': typeof AppManagerEvaluationRoute
+  '/app/manager/leave-approval': typeof AppManagerLeaveApprovalRoute
+  '/app/manager/payroll-summary': typeof AppManagerPayrollSummaryRoute
+  '/app/manager/team': typeof AppManagerTeamRoute
+  '/app/admin/': typeof AppAdminIndexRoute
   '/app/employee/': typeof AppEmployeeIndexRoute
   '/app/finance/': typeof AppFinanceIndexRoute
   '/app/hr/': typeof AppHrIndexRoute
@@ -151,6 +201,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/app/profile': typeof AppProfileRoute
+  '/app/admin/users': typeof AppAdminUsersRoute
   '/app/employee/attendance': typeof AppEmployeeAttendanceRoute
   '/app/employee/leave': typeof AppEmployeeLeaveRoute
   '/app/employee/payroll-history': typeof AppEmployeePayrollHistoryRoute
@@ -163,6 +214,12 @@ export interface FileRoutesByTo {
   '/app/hr/leave': typeof AppHrLeaveRoute
   '/app/hr/payroll': typeof AppHrPayrollRoute
   '/app/hr/reports': typeof AppHrReportsRoute
+  '/app/manager/attendance': typeof AppManagerAttendanceRoute
+  '/app/manager/evaluation': typeof AppManagerEvaluationRoute
+  '/app/manager/leave-approval': typeof AppManagerLeaveApprovalRoute
+  '/app/manager/payroll-summary': typeof AppManagerPayrollSummaryRoute
+  '/app/manager/team': typeof AppManagerTeamRoute
+  '/app/admin': typeof AppAdminIndexRoute
   '/app/employee': typeof AppEmployeeIndexRoute
   '/app/finance': typeof AppFinanceIndexRoute
   '/app/hr': typeof AppHrIndexRoute
@@ -173,6 +230,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/app/profile': typeof AppProfileRoute
+  '/app/admin/users': typeof AppAdminUsersRoute
   '/app/employee/attendance': typeof AppEmployeeAttendanceRoute
   '/app/employee/leave': typeof AppEmployeeLeaveRoute
   '/app/employee/payroll-history': typeof AppEmployeePayrollHistoryRoute
@@ -185,6 +243,12 @@ export interface FileRoutesById {
   '/app/hr/leave': typeof AppHrLeaveRoute
   '/app/hr/payroll': typeof AppHrPayrollRoute
   '/app/hr/reports': typeof AppHrReportsRoute
+  '/app/manager/attendance': typeof AppManagerAttendanceRoute
+  '/app/manager/evaluation': typeof AppManagerEvaluationRoute
+  '/app/manager/leave-approval': typeof AppManagerLeaveApprovalRoute
+  '/app/manager/payroll-summary': typeof AppManagerPayrollSummaryRoute
+  '/app/manager/team': typeof AppManagerTeamRoute
+  '/app/admin/': typeof AppAdminIndexRoute
   '/app/employee/': typeof AppEmployeeIndexRoute
   '/app/finance/': typeof AppFinanceIndexRoute
   '/app/hr/': typeof AppHrIndexRoute
@@ -196,6 +260,7 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/app/profile'
+    | '/app/admin/users'
     | '/app/employee/attendance'
     | '/app/employee/leave'
     | '/app/employee/payroll-history'
@@ -208,6 +273,12 @@ export interface FileRouteTypes {
     | '/app/hr/leave'
     | '/app/hr/payroll'
     | '/app/hr/reports'
+    | '/app/manager/attendance'
+    | '/app/manager/evaluation'
+    | '/app/manager/leave-approval'
+    | '/app/manager/payroll-summary'
+    | '/app/manager/team'
+    | '/app/admin/'
     | '/app/employee/'
     | '/app/finance/'
     | '/app/hr/'
@@ -217,6 +288,7 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/app/profile'
+    | '/app/admin/users'
     | '/app/employee/attendance'
     | '/app/employee/leave'
     | '/app/employee/payroll-history'
@@ -229,6 +301,12 @@ export interface FileRouteTypes {
     | '/app/hr/leave'
     | '/app/hr/payroll'
     | '/app/hr/reports'
+    | '/app/manager/attendance'
+    | '/app/manager/evaluation'
+    | '/app/manager/leave-approval'
+    | '/app/manager/payroll-summary'
+    | '/app/manager/team'
+    | '/app/admin'
     | '/app/employee'
     | '/app/finance'
     | '/app/hr'
@@ -238,6 +316,7 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/app/profile'
+    | '/app/admin/users'
     | '/app/employee/attendance'
     | '/app/employee/leave'
     | '/app/employee/payroll-history'
@@ -250,6 +329,12 @@ export interface FileRouteTypes {
     | '/app/hr/leave'
     | '/app/hr/payroll'
     | '/app/hr/reports'
+    | '/app/manager/attendance'
+    | '/app/manager/evaluation'
+    | '/app/manager/leave-approval'
+    | '/app/manager/payroll-summary'
+    | '/app/manager/team'
+    | '/app/admin/'
     | '/app/employee/'
     | '/app/finance/'
     | '/app/hr/'
@@ -310,6 +395,48 @@ declare module '@tanstack/react-router' {
       path: '/employee'
       fullPath: '/app/employee/'
       preLoaderRoute: typeof AppEmployeeIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/admin/': {
+      id: '/app/admin/'
+      path: '/admin'
+      fullPath: '/app/admin/'
+      preLoaderRoute: typeof AppAdminIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/manager/team': {
+      id: '/app/manager/team'
+      path: '/manager/team'
+      fullPath: '/app/manager/team'
+      preLoaderRoute: typeof AppManagerTeamRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/manager/payroll-summary': {
+      id: '/app/manager/payroll-summary'
+      path: '/manager/payroll-summary'
+      fullPath: '/app/manager/payroll-summary'
+      preLoaderRoute: typeof AppManagerPayrollSummaryRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/manager/leave-approval': {
+      id: '/app/manager/leave-approval'
+      path: '/manager/leave-approval'
+      fullPath: '/app/manager/leave-approval'
+      preLoaderRoute: typeof AppManagerLeaveApprovalRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/manager/evaluation': {
+      id: '/app/manager/evaluation'
+      path: '/manager/evaluation'
+      fullPath: '/app/manager/evaluation'
+      preLoaderRoute: typeof AppManagerEvaluationRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/manager/attendance': {
+      id: '/app/manager/attendance'
+      path: '/manager/attendance'
+      fullPath: '/app/manager/attendance'
+      preLoaderRoute: typeof AppManagerAttendanceRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/hr/reports': {
@@ -396,11 +523,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEmployeeAttendanceRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/admin/users': {
+      id: '/app/admin/users'
+      path: '/admin/users'
+      fullPath: '/app/admin/users'
+      preLoaderRoute: typeof AppAdminUsersRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
 interface AppRouteChildren {
   AppProfileRoute: typeof AppProfileRoute
+  AppAdminUsersRoute: typeof AppAdminUsersRoute
   AppEmployeeAttendanceRoute: typeof AppEmployeeAttendanceRoute
   AppEmployeeLeaveRoute: typeof AppEmployeeLeaveRoute
   AppEmployeePayrollHistoryRoute: typeof AppEmployeePayrollHistoryRoute
@@ -413,6 +548,12 @@ interface AppRouteChildren {
   AppHrLeaveRoute: typeof AppHrLeaveRoute
   AppHrPayrollRoute: typeof AppHrPayrollRoute
   AppHrReportsRoute: typeof AppHrReportsRoute
+  AppManagerAttendanceRoute: typeof AppManagerAttendanceRoute
+  AppManagerEvaluationRoute: typeof AppManagerEvaluationRoute
+  AppManagerLeaveApprovalRoute: typeof AppManagerLeaveApprovalRoute
+  AppManagerPayrollSummaryRoute: typeof AppManagerPayrollSummaryRoute
+  AppManagerTeamRoute: typeof AppManagerTeamRoute
+  AppAdminIndexRoute: typeof AppAdminIndexRoute
   AppEmployeeIndexRoute: typeof AppEmployeeIndexRoute
   AppFinanceIndexRoute: typeof AppFinanceIndexRoute
   AppHrIndexRoute: typeof AppHrIndexRoute
@@ -421,6 +562,7 @@ interface AppRouteChildren {
 
 const AppRouteChildren: AppRouteChildren = {
   AppProfileRoute: AppProfileRoute,
+  AppAdminUsersRoute: AppAdminUsersRoute,
   AppEmployeeAttendanceRoute: AppEmployeeAttendanceRoute,
   AppEmployeeLeaveRoute: AppEmployeeLeaveRoute,
   AppEmployeePayrollHistoryRoute: AppEmployeePayrollHistoryRoute,
@@ -433,6 +575,12 @@ const AppRouteChildren: AppRouteChildren = {
   AppHrLeaveRoute: AppHrLeaveRoute,
   AppHrPayrollRoute: AppHrPayrollRoute,
   AppHrReportsRoute: AppHrReportsRoute,
+  AppManagerAttendanceRoute: AppManagerAttendanceRoute,
+  AppManagerEvaluationRoute: AppManagerEvaluationRoute,
+  AppManagerLeaveApprovalRoute: AppManagerLeaveApprovalRoute,
+  AppManagerPayrollSummaryRoute: AppManagerPayrollSummaryRoute,
+  AppManagerTeamRoute: AppManagerTeamRoute,
+  AppAdminIndexRoute: AppAdminIndexRoute,
   AppEmployeeIndexRoute: AppEmployeeIndexRoute,
   AppFinanceIndexRoute: AppFinanceIndexRoute,
   AppHrIndexRoute: AppHrIndexRoute,
