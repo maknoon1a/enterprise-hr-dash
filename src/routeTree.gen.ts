@@ -13,6 +13,7 @@ import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppProfileRouteImport } from './routes/app/profile'
 import { Route as AppEmployeeIndexRouteImport } from './routes/app/employee/index'
+import { Route as AppEmployeeAttendanceRouteImport } from './routes/app/employee/attendance'
 
 const AppRoute = AppRouteImport.update({
   id: '/app',
@@ -34,17 +35,24 @@ const AppEmployeeIndexRoute = AppEmployeeIndexRouteImport.update({
   path: '/employee/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppEmployeeAttendanceRoute = AppEmployeeAttendanceRouteImport.update({
+  id: '/employee/attendance',
+  path: '/employee/attendance',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/app/profile': typeof AppProfileRoute
+  '/app/employee/attendance': typeof AppEmployeeAttendanceRoute
   '/app/employee/': typeof AppEmployeeIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/app/profile': typeof AppProfileRoute
+  '/app/employee/attendance': typeof AppEmployeeAttendanceRoute
   '/app/employee': typeof AppEmployeeIndexRoute
 }
 export interface FileRoutesById {
@@ -52,14 +60,31 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/app/profile': typeof AppProfileRoute
+  '/app/employee/attendance': typeof AppEmployeeAttendanceRoute
   '/app/employee/': typeof AppEmployeeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/app' | '/app/profile' | '/app/employee/'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/app/profile'
+    | '/app/employee/attendance'
+    | '/app/employee/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/app' | '/app/profile' | '/app/employee'
-  id: '__root__' | '/' | '/app' | '/app/profile' | '/app/employee/'
+  to:
+    | '/'
+    | '/app'
+    | '/app/profile'
+    | '/app/employee/attendance'
+    | '/app/employee'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/app/profile'
+    | '/app/employee/attendance'
+    | '/app/employee/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -97,16 +122,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEmployeeIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/employee/attendance': {
+      id: '/app/employee/attendance'
+      path: '/employee/attendance'
+      fullPath: '/app/employee/attendance'
+      preLoaderRoute: typeof AppEmployeeAttendanceRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
 interface AppRouteChildren {
   AppProfileRoute: typeof AppProfileRoute
+  AppEmployeeAttendanceRoute: typeof AppEmployeeAttendanceRoute
   AppEmployeeIndexRoute: typeof AppEmployeeIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppProfileRoute: AppProfileRoute,
+  AppEmployeeAttendanceRoute: AppEmployeeAttendanceRoute,
   AppEmployeeIndexRoute: AppEmployeeIndexRoute,
 }
 
