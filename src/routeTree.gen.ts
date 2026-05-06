@@ -13,6 +13,7 @@ import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppProfileRouteImport } from './routes/app/profile'
 import { Route as AppEmployeeIndexRouteImport } from './routes/app/employee/index'
+import { Route as AppEmployeeLeaveRouteImport } from './routes/app/employee/leave'
 import { Route as AppEmployeeAttendanceRouteImport } from './routes/app/employee/attendance'
 
 const AppRoute = AppRouteImport.update({
@@ -35,6 +36,11 @@ const AppEmployeeIndexRoute = AppEmployeeIndexRouteImport.update({
   path: '/employee/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppEmployeeLeaveRoute = AppEmployeeLeaveRouteImport.update({
+  id: '/employee/leave',
+  path: '/employee/leave',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppEmployeeAttendanceRoute = AppEmployeeAttendanceRouteImport.update({
   id: '/employee/attendance',
   path: '/employee/attendance',
@@ -46,6 +52,7 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppRouteWithChildren
   '/app/profile': typeof AppProfileRoute
   '/app/employee/attendance': typeof AppEmployeeAttendanceRoute
+  '/app/employee/leave': typeof AppEmployeeLeaveRoute
   '/app/employee/': typeof AppEmployeeIndexRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +60,7 @@ export interface FileRoutesByTo {
   '/app': typeof AppRouteWithChildren
   '/app/profile': typeof AppProfileRoute
   '/app/employee/attendance': typeof AppEmployeeAttendanceRoute
+  '/app/employee/leave': typeof AppEmployeeLeaveRoute
   '/app/employee': typeof AppEmployeeIndexRoute
 }
 export interface FileRoutesById {
@@ -61,6 +69,7 @@ export interface FileRoutesById {
   '/app': typeof AppRouteWithChildren
   '/app/profile': typeof AppProfileRoute
   '/app/employee/attendance': typeof AppEmployeeAttendanceRoute
+  '/app/employee/leave': typeof AppEmployeeLeaveRoute
   '/app/employee/': typeof AppEmployeeIndexRoute
 }
 export interface FileRouteTypes {
@@ -70,6 +79,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/app/profile'
     | '/app/employee/attendance'
+    | '/app/employee/leave'
     | '/app/employee/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -77,6 +87,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/app/profile'
     | '/app/employee/attendance'
+    | '/app/employee/leave'
     | '/app/employee'
   id:
     | '__root__'
@@ -84,6 +95,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/app/profile'
     | '/app/employee/attendance'
+    | '/app/employee/leave'
     | '/app/employee/'
   fileRoutesById: FileRoutesById
 }
@@ -122,6 +134,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEmployeeIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/employee/leave': {
+      id: '/app/employee/leave'
+      path: '/employee/leave'
+      fullPath: '/app/employee/leave'
+      preLoaderRoute: typeof AppEmployeeLeaveRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/employee/attendance': {
       id: '/app/employee/attendance'
       path: '/employee/attendance'
@@ -135,12 +154,14 @@ declare module '@tanstack/react-router' {
 interface AppRouteChildren {
   AppProfileRoute: typeof AppProfileRoute
   AppEmployeeAttendanceRoute: typeof AppEmployeeAttendanceRoute
+  AppEmployeeLeaveRoute: typeof AppEmployeeLeaveRoute
   AppEmployeeIndexRoute: typeof AppEmployeeIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppProfileRoute: AppProfileRoute,
   AppEmployeeAttendanceRoute: AppEmployeeAttendanceRoute,
+  AppEmployeeLeaveRoute: AppEmployeeLeaveRoute,
   AppEmployeeIndexRoute: AppEmployeeIndexRoute,
 }
 
