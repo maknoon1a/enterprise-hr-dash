@@ -13,6 +13,7 @@ import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppProfileRouteImport } from './routes/app/profile'
 import { Route as AppHrIndexRouteImport } from './routes/app/hr/index'
+import { Route as AppFinanceIndexRouteImport } from './routes/app/finance/index'
 import { Route as AppEmployeeIndexRouteImport } from './routes/app/employee/index'
 import { Route as AppHrReportsRouteImport } from './routes/app/hr/reports'
 import { Route as AppHrPayrollRouteImport } from './routes/app/hr/payroll'
@@ -42,6 +43,11 @@ const AppProfileRoute = AppProfileRouteImport.update({
 const AppHrIndexRoute = AppHrIndexRouteImport.update({
   id: '/hr/',
   path: '/hr/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppFinanceIndexRoute = AppFinanceIndexRouteImport.update({
+  id: '/finance/',
+  path: '/finance/',
   getParentRoute: () => AppRoute,
 } as any)
 const AppEmployeeIndexRoute = AppEmployeeIndexRouteImport.update({
@@ -110,6 +116,7 @@ export interface FileRoutesByFullPath {
   '/app/hr/payroll': typeof AppHrPayrollRoute
   '/app/hr/reports': typeof AppHrReportsRoute
   '/app/employee/': typeof AppEmployeeIndexRoute
+  '/app/finance/': typeof AppFinanceIndexRoute
   '/app/hr/': typeof AppHrIndexRoute
 }
 export interface FileRoutesByTo {
@@ -126,6 +133,7 @@ export interface FileRoutesByTo {
   '/app/hr/payroll': typeof AppHrPayrollRoute
   '/app/hr/reports': typeof AppHrReportsRoute
   '/app/employee': typeof AppEmployeeIndexRoute
+  '/app/finance': typeof AppFinanceIndexRoute
   '/app/hr': typeof AppHrIndexRoute
 }
 export interface FileRoutesById {
@@ -143,6 +151,7 @@ export interface FileRoutesById {
   '/app/hr/payroll': typeof AppHrPayrollRoute
   '/app/hr/reports': typeof AppHrReportsRoute
   '/app/employee/': typeof AppEmployeeIndexRoute
+  '/app/finance/': typeof AppFinanceIndexRoute
   '/app/hr/': typeof AppHrIndexRoute
 }
 export interface FileRouteTypes {
@@ -161,6 +170,7 @@ export interface FileRouteTypes {
     | '/app/hr/payroll'
     | '/app/hr/reports'
     | '/app/employee/'
+    | '/app/finance/'
     | '/app/hr/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -177,6 +187,7 @@ export interface FileRouteTypes {
     | '/app/hr/payroll'
     | '/app/hr/reports'
     | '/app/employee'
+    | '/app/finance'
     | '/app/hr'
   id:
     | '__root__'
@@ -193,6 +204,7 @@ export interface FileRouteTypes {
     | '/app/hr/payroll'
     | '/app/hr/reports'
     | '/app/employee/'
+    | '/app/finance/'
     | '/app/hr/'
   fileRoutesById: FileRoutesById
 }
@@ -229,6 +241,13 @@ declare module '@tanstack/react-router' {
       path: '/hr'
       fullPath: '/app/hr/'
       preLoaderRoute: typeof AppHrIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/finance/': {
+      id: '/app/finance/'
+      path: '/finance'
+      fullPath: '/app/finance/'
+      preLoaderRoute: typeof AppFinanceIndexRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/employee/': {
@@ -316,6 +335,7 @@ interface AppRouteChildren {
   AppHrPayrollRoute: typeof AppHrPayrollRoute
   AppHrReportsRoute: typeof AppHrReportsRoute
   AppEmployeeIndexRoute: typeof AppEmployeeIndexRoute
+  AppFinanceIndexRoute: typeof AppFinanceIndexRoute
   AppHrIndexRoute: typeof AppHrIndexRoute
 }
 
@@ -331,6 +351,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppHrPayrollRoute: AppHrPayrollRoute,
   AppHrReportsRoute: AppHrReportsRoute,
   AppEmployeeIndexRoute: AppEmployeeIndexRoute,
+  AppFinanceIndexRoute: AppFinanceIndexRoute,
   AppHrIndexRoute: AppHrIndexRoute,
 }
 
