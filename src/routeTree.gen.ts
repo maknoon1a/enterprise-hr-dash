@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppProfileRouteImport } from './routes/app/profile'
+import { Route as AppHrIndexRouteImport } from './routes/app/hr/index'
 import { Route as AppEmployeeIndexRouteImport } from './routes/app/employee/index'
 import { Route as AppEmployeePayslipRouteImport } from './routes/app/employee/payslip'
 import { Route as AppEmployeePayrollHistoryRouteImport } from './routes/app/employee/payroll-history'
@@ -31,6 +32,11 @@ const IndexRoute = IndexRouteImport.update({
 const AppProfileRoute = AppProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppHrIndexRoute = AppHrIndexRouteImport.update({
+  id: '/hr/',
+  path: '/hr/',
   getParentRoute: () => AppRoute,
 } as any)
 const AppEmployeeIndexRoute = AppEmployeeIndexRouteImport.update({
@@ -69,6 +75,7 @@ export interface FileRoutesByFullPath {
   '/app/employee/payroll-history': typeof AppEmployeePayrollHistoryRoute
   '/app/employee/payslip': typeof AppEmployeePayslipRoute
   '/app/employee/': typeof AppEmployeeIndexRoute
+  '/app/hr/': typeof AppHrIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -79,6 +86,7 @@ export interface FileRoutesByTo {
   '/app/employee/payroll-history': typeof AppEmployeePayrollHistoryRoute
   '/app/employee/payslip': typeof AppEmployeePayslipRoute
   '/app/employee': typeof AppEmployeeIndexRoute
+  '/app/hr': typeof AppHrIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -90,6 +98,7 @@ export interface FileRoutesById {
   '/app/employee/payroll-history': typeof AppEmployeePayrollHistoryRoute
   '/app/employee/payslip': typeof AppEmployeePayslipRoute
   '/app/employee/': typeof AppEmployeeIndexRoute
+  '/app/hr/': typeof AppHrIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -102,6 +111,7 @@ export interface FileRouteTypes {
     | '/app/employee/payroll-history'
     | '/app/employee/payslip'
     | '/app/employee/'
+    | '/app/hr/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -112,6 +122,7 @@ export interface FileRouteTypes {
     | '/app/employee/payroll-history'
     | '/app/employee/payslip'
     | '/app/employee'
+    | '/app/hr'
   id:
     | '__root__'
     | '/'
@@ -122,6 +133,7 @@ export interface FileRouteTypes {
     | '/app/employee/payroll-history'
     | '/app/employee/payslip'
     | '/app/employee/'
+    | '/app/hr/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -150,6 +162,13 @@ declare module '@tanstack/react-router' {
       path: '/profile'
       fullPath: '/app/profile'
       preLoaderRoute: typeof AppProfileRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/hr/': {
+      id: '/app/hr/'
+      path: '/hr'
+      fullPath: '/app/hr/'
+      preLoaderRoute: typeof AppHrIndexRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/employee/': {
@@ -197,6 +216,7 @@ interface AppRouteChildren {
   AppEmployeePayrollHistoryRoute: typeof AppEmployeePayrollHistoryRoute
   AppEmployeePayslipRoute: typeof AppEmployeePayslipRoute
   AppEmployeeIndexRoute: typeof AppEmployeeIndexRoute
+  AppHrIndexRoute: typeof AppHrIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
@@ -206,6 +226,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppEmployeePayrollHistoryRoute: AppEmployeePayrollHistoryRoute,
   AppEmployeePayslipRoute: AppEmployeePayslipRoute,
   AppEmployeeIndexRoute: AppEmployeeIndexRoute,
+  AppHrIndexRoute: AppHrIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
