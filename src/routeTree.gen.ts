@@ -14,8 +14,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppProfileRouteImport } from './routes/app/profile'
 import { Route as AppHrIndexRouteImport } from './routes/app/hr/index'
 import { Route as AppEmployeeIndexRouteImport } from './routes/app/employee/index'
+import { Route as AppHrReportsRouteImport } from './routes/app/hr/reports'
+import { Route as AppHrPayrollRouteImport } from './routes/app/hr/payroll'
 import { Route as AppHrLeaveRouteImport } from './routes/app/hr/leave'
 import { Route as AppHrEmployeesRouteImport } from './routes/app/hr/employees'
+import { Route as AppHrAttendanceRouteImport } from './routes/app/hr/attendance'
 import { Route as AppEmployeePayslipRouteImport } from './routes/app/employee/payslip'
 import { Route as AppEmployeePayrollHistoryRouteImport } from './routes/app/employee/payroll-history'
 import { Route as AppEmployeeLeaveRouteImport } from './routes/app/employee/leave'
@@ -46,6 +49,16 @@ const AppEmployeeIndexRoute = AppEmployeeIndexRouteImport.update({
   path: '/employee/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppHrReportsRoute = AppHrReportsRouteImport.update({
+  id: '/hr/reports',
+  path: '/hr/reports',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppHrPayrollRoute = AppHrPayrollRouteImport.update({
+  id: '/hr/payroll',
+  path: '/hr/payroll',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppHrLeaveRoute = AppHrLeaveRouteImport.update({
   id: '/hr/leave',
   path: '/hr/leave',
@@ -54,6 +67,11 @@ const AppHrLeaveRoute = AppHrLeaveRouteImport.update({
 const AppHrEmployeesRoute = AppHrEmployeesRouteImport.update({
   id: '/hr/employees',
   path: '/hr/employees',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppHrAttendanceRoute = AppHrAttendanceRouteImport.update({
+  id: '/hr/attendance',
+  path: '/hr/attendance',
   getParentRoute: () => AppRoute,
 } as any)
 const AppEmployeePayslipRoute = AppEmployeePayslipRouteImport.update({
@@ -86,8 +104,11 @@ export interface FileRoutesByFullPath {
   '/app/employee/leave': typeof AppEmployeeLeaveRoute
   '/app/employee/payroll-history': typeof AppEmployeePayrollHistoryRoute
   '/app/employee/payslip': typeof AppEmployeePayslipRoute
+  '/app/hr/attendance': typeof AppHrAttendanceRoute
   '/app/hr/employees': typeof AppHrEmployeesRoute
   '/app/hr/leave': typeof AppHrLeaveRoute
+  '/app/hr/payroll': typeof AppHrPayrollRoute
+  '/app/hr/reports': typeof AppHrReportsRoute
   '/app/employee/': typeof AppEmployeeIndexRoute
   '/app/hr/': typeof AppHrIndexRoute
 }
@@ -99,8 +120,11 @@ export interface FileRoutesByTo {
   '/app/employee/leave': typeof AppEmployeeLeaveRoute
   '/app/employee/payroll-history': typeof AppEmployeePayrollHistoryRoute
   '/app/employee/payslip': typeof AppEmployeePayslipRoute
+  '/app/hr/attendance': typeof AppHrAttendanceRoute
   '/app/hr/employees': typeof AppHrEmployeesRoute
   '/app/hr/leave': typeof AppHrLeaveRoute
+  '/app/hr/payroll': typeof AppHrPayrollRoute
+  '/app/hr/reports': typeof AppHrReportsRoute
   '/app/employee': typeof AppEmployeeIndexRoute
   '/app/hr': typeof AppHrIndexRoute
 }
@@ -113,8 +137,11 @@ export interface FileRoutesById {
   '/app/employee/leave': typeof AppEmployeeLeaveRoute
   '/app/employee/payroll-history': typeof AppEmployeePayrollHistoryRoute
   '/app/employee/payslip': typeof AppEmployeePayslipRoute
+  '/app/hr/attendance': typeof AppHrAttendanceRoute
   '/app/hr/employees': typeof AppHrEmployeesRoute
   '/app/hr/leave': typeof AppHrLeaveRoute
+  '/app/hr/payroll': typeof AppHrPayrollRoute
+  '/app/hr/reports': typeof AppHrReportsRoute
   '/app/employee/': typeof AppEmployeeIndexRoute
   '/app/hr/': typeof AppHrIndexRoute
 }
@@ -128,8 +155,11 @@ export interface FileRouteTypes {
     | '/app/employee/leave'
     | '/app/employee/payroll-history'
     | '/app/employee/payslip'
+    | '/app/hr/attendance'
     | '/app/hr/employees'
     | '/app/hr/leave'
+    | '/app/hr/payroll'
+    | '/app/hr/reports'
     | '/app/employee/'
     | '/app/hr/'
   fileRoutesByTo: FileRoutesByTo
@@ -141,8 +171,11 @@ export interface FileRouteTypes {
     | '/app/employee/leave'
     | '/app/employee/payroll-history'
     | '/app/employee/payslip'
+    | '/app/hr/attendance'
     | '/app/hr/employees'
     | '/app/hr/leave'
+    | '/app/hr/payroll'
+    | '/app/hr/reports'
     | '/app/employee'
     | '/app/hr'
   id:
@@ -154,8 +187,11 @@ export interface FileRouteTypes {
     | '/app/employee/leave'
     | '/app/employee/payroll-history'
     | '/app/employee/payslip'
+    | '/app/hr/attendance'
     | '/app/hr/employees'
     | '/app/hr/leave'
+    | '/app/hr/payroll'
+    | '/app/hr/reports'
     | '/app/employee/'
     | '/app/hr/'
   fileRoutesById: FileRoutesById
@@ -202,6 +238,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEmployeeIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/hr/reports': {
+      id: '/app/hr/reports'
+      path: '/hr/reports'
+      fullPath: '/app/hr/reports'
+      preLoaderRoute: typeof AppHrReportsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/hr/payroll': {
+      id: '/app/hr/payroll'
+      path: '/hr/payroll'
+      fullPath: '/app/hr/payroll'
+      preLoaderRoute: typeof AppHrPayrollRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/hr/leave': {
       id: '/app/hr/leave'
       path: '/hr/leave'
@@ -214,6 +264,13 @@ declare module '@tanstack/react-router' {
       path: '/hr/employees'
       fullPath: '/app/hr/employees'
       preLoaderRoute: typeof AppHrEmployeesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/hr/attendance': {
+      id: '/app/hr/attendance'
+      path: '/hr/attendance'
+      fullPath: '/app/hr/attendance'
+      preLoaderRoute: typeof AppHrAttendanceRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/employee/payslip': {
@@ -253,8 +310,11 @@ interface AppRouteChildren {
   AppEmployeeLeaveRoute: typeof AppEmployeeLeaveRoute
   AppEmployeePayrollHistoryRoute: typeof AppEmployeePayrollHistoryRoute
   AppEmployeePayslipRoute: typeof AppEmployeePayslipRoute
+  AppHrAttendanceRoute: typeof AppHrAttendanceRoute
   AppHrEmployeesRoute: typeof AppHrEmployeesRoute
   AppHrLeaveRoute: typeof AppHrLeaveRoute
+  AppHrPayrollRoute: typeof AppHrPayrollRoute
+  AppHrReportsRoute: typeof AppHrReportsRoute
   AppEmployeeIndexRoute: typeof AppEmployeeIndexRoute
   AppHrIndexRoute: typeof AppHrIndexRoute
 }
@@ -265,8 +325,11 @@ const AppRouteChildren: AppRouteChildren = {
   AppEmployeeLeaveRoute: AppEmployeeLeaveRoute,
   AppEmployeePayrollHistoryRoute: AppEmployeePayrollHistoryRoute,
   AppEmployeePayslipRoute: AppEmployeePayslipRoute,
+  AppHrAttendanceRoute: AppHrAttendanceRoute,
   AppHrEmployeesRoute: AppHrEmployeesRoute,
   AppHrLeaveRoute: AppHrLeaveRoute,
+  AppHrPayrollRoute: AppHrPayrollRoute,
+  AppHrReportsRoute: AppHrReportsRoute,
   AppEmployeeIndexRoute: AppEmployeeIndexRoute,
   AppHrIndexRoute: AppHrIndexRoute,
 }
