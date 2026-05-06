@@ -14,6 +14,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppProfileRouteImport } from './routes/app/profile'
 import { Route as AppHrIndexRouteImport } from './routes/app/hr/index'
 import { Route as AppEmployeeIndexRouteImport } from './routes/app/employee/index'
+import { Route as AppHrLeaveRouteImport } from './routes/app/hr/leave'
 import { Route as AppHrEmployeesRouteImport } from './routes/app/hr/employees'
 import { Route as AppEmployeePayslipRouteImport } from './routes/app/employee/payslip'
 import { Route as AppEmployeePayrollHistoryRouteImport } from './routes/app/employee/payroll-history'
@@ -43,6 +44,11 @@ const AppHrIndexRoute = AppHrIndexRouteImport.update({
 const AppEmployeeIndexRoute = AppEmployeeIndexRouteImport.update({
   id: '/employee/',
   path: '/employee/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppHrLeaveRoute = AppHrLeaveRouteImport.update({
+  id: '/hr/leave',
+  path: '/hr/leave',
   getParentRoute: () => AppRoute,
 } as any)
 const AppHrEmployeesRoute = AppHrEmployeesRouteImport.update({
@@ -81,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/app/employee/payroll-history': typeof AppEmployeePayrollHistoryRoute
   '/app/employee/payslip': typeof AppEmployeePayslipRoute
   '/app/hr/employees': typeof AppHrEmployeesRoute
+  '/app/hr/leave': typeof AppHrLeaveRoute
   '/app/employee/': typeof AppEmployeeIndexRoute
   '/app/hr/': typeof AppHrIndexRoute
 }
@@ -93,6 +100,7 @@ export interface FileRoutesByTo {
   '/app/employee/payroll-history': typeof AppEmployeePayrollHistoryRoute
   '/app/employee/payslip': typeof AppEmployeePayslipRoute
   '/app/hr/employees': typeof AppHrEmployeesRoute
+  '/app/hr/leave': typeof AppHrLeaveRoute
   '/app/employee': typeof AppEmployeeIndexRoute
   '/app/hr': typeof AppHrIndexRoute
 }
@@ -106,6 +114,7 @@ export interface FileRoutesById {
   '/app/employee/payroll-history': typeof AppEmployeePayrollHistoryRoute
   '/app/employee/payslip': typeof AppEmployeePayslipRoute
   '/app/hr/employees': typeof AppHrEmployeesRoute
+  '/app/hr/leave': typeof AppHrLeaveRoute
   '/app/employee/': typeof AppEmployeeIndexRoute
   '/app/hr/': typeof AppHrIndexRoute
 }
@@ -120,6 +129,7 @@ export interface FileRouteTypes {
     | '/app/employee/payroll-history'
     | '/app/employee/payslip'
     | '/app/hr/employees'
+    | '/app/hr/leave'
     | '/app/employee/'
     | '/app/hr/'
   fileRoutesByTo: FileRoutesByTo
@@ -132,6 +142,7 @@ export interface FileRouteTypes {
     | '/app/employee/payroll-history'
     | '/app/employee/payslip'
     | '/app/hr/employees'
+    | '/app/hr/leave'
     | '/app/employee'
     | '/app/hr'
   id:
@@ -144,6 +155,7 @@ export interface FileRouteTypes {
     | '/app/employee/payroll-history'
     | '/app/employee/payslip'
     | '/app/hr/employees'
+    | '/app/hr/leave'
     | '/app/employee/'
     | '/app/hr/'
   fileRoutesById: FileRoutesById
@@ -188,6 +200,13 @@ declare module '@tanstack/react-router' {
       path: '/employee'
       fullPath: '/app/employee/'
       preLoaderRoute: typeof AppEmployeeIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/hr/leave': {
+      id: '/app/hr/leave'
+      path: '/hr/leave'
+      fullPath: '/app/hr/leave'
+      preLoaderRoute: typeof AppHrLeaveRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/hr/employees': {
@@ -235,6 +254,7 @@ interface AppRouteChildren {
   AppEmployeePayrollHistoryRoute: typeof AppEmployeePayrollHistoryRoute
   AppEmployeePayslipRoute: typeof AppEmployeePayslipRoute
   AppHrEmployeesRoute: typeof AppHrEmployeesRoute
+  AppHrLeaveRoute: typeof AppHrLeaveRoute
   AppEmployeeIndexRoute: typeof AppEmployeeIndexRoute
   AppHrIndexRoute: typeof AppHrIndexRoute
 }
@@ -246,6 +266,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppEmployeePayrollHistoryRoute: AppEmployeePayrollHistoryRoute,
   AppEmployeePayslipRoute: AppEmployeePayslipRoute,
   AppHrEmployeesRoute: AppHrEmployeesRoute,
+  AppHrLeaveRoute: AppHrLeaveRoute,
   AppEmployeeIndexRoute: AppEmployeeIndexRoute,
   AppHrIndexRoute: AppHrIndexRoute,
 }
