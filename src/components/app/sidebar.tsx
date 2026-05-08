@@ -122,13 +122,36 @@ export function AppSidebar() {
       </div>
 
       {/* User profile */}
-      <div className="px-4 py-4 border-b border-sidebar-border flex items-center gap-3">
-        <div className="h-10 w-10 rounded-full bg-gradient-to-br from-sidebar-primary to-sidebar-primary/60 text-sidebar-primary-foreground flex items-center justify-center text-sm font-semibold shrink-0">
-          {user.avatar}
+      <div className="px-3 py-4 border-b border-sidebar-border space-y-3">
+        <div className="flex items-center gap-3 px-1">
+          <div className="h-10 w-10 rounded-full bg-gradient-to-br from-sidebar-primary to-sidebar-primary/60 text-sidebar-primary-foreground flex items-center justify-center text-sm font-semibold shrink-0">
+            {user.avatar}
+          </div>
+          <div className="min-w-0">
+            <p className="text-sm font-medium truncate">{user.name}</p>
+            <p className="text-[11px] text-sidebar-foreground/60 truncate">{user.position}</p>
+          </div>
         </div>
-        <div className="min-w-0">
-          <p className="text-sm font-medium truncate">{user.name}</p>
-          <p className="text-[11px] text-sidebar-foreground/60 truncate">{user.position}</p>
+        <div className="space-y-1">
+          <Link
+            to="/app/profile"
+            className={cn(
+              "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
+              pathname === "/app/profile"
+                ? "bg-sidebar-primary text-sidebar-primary-foreground"
+                : "text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-foreground"
+            )}
+          >
+            <User className="h-4 w-4" />
+            <span>Profile Saya</span>
+          </Link>
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 rounded-md px-3 py-2 text-sm text-red-400 hover:bg-red-500/10 transition-colors"
+          >
+            <LogOut className="h-4 w-4" />
+            <span>Logout</span>
+          </button>
         </div>
       </div>
 
@@ -162,28 +185,8 @@ export function AppSidebar() {
         ))}
       </nav>
 
-      {/* Profile & logout */}
-      <div className="border-t border-sidebar-border p-3 space-y-1">
-        <Link
-          to="/app/profile"
-          className={cn(
-            "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
-            pathname === "/app/profile"
-              ? "bg-sidebar-primary text-sidebar-primary-foreground"
-              : "text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-foreground"
-          )}
-        >
-          <User className="h-4 w-4" />
-          <span>Profile Saya</span>
-        </Link>
-        <button
-          onClick={handleLogout}
-          className="w-full flex items-center gap-3 rounded-md px-3 py-2 text-sm text-red-400 hover:bg-red-500/10 transition-colors"
-        >
-          <LogOut className="h-4 w-4" />
-          <span>Logout</span>
-        </button>
-        <p className="px-3 pt-2 text-[10px] text-sidebar-foreground/40">v2.4.1 · © NusaCorp 2026</p>
+      <div className="border-t border-sidebar-border px-4 py-3 text-[10px] text-sidebar-foreground/40">
+        v2.4.1 · © NusaCorp 2026
       </div>
     </aside>
   );
