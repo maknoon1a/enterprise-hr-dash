@@ -1,13 +1,14 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import { useRole, ROLE_LABELS, ROLES } from "@/lib/role-context";
+import { ROLE_USERS } from "@/lib/data";
 import type { Role } from "@/lib/types";
 import {
   LayoutDashboard, Clock, CalendarDays, FileText, Wallet, Users, ClipboardList,
   Calculator, BarChart3, ShieldCheck, CreditCard, Receipt, UserCog, UsersRound,
-  CheckSquare, TrendingUp, Building2, ChevronDown,
+  CheckSquare, TrendingUp, Building2, User, LogOut,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { toast } from "sonner";
 
 interface NavItem { to: string; label: string; icon: any }
 
@@ -63,15 +64,54 @@ const NAV: Record<Role, { section: string; items: NavItem[] }[]> = {
   ],
 };
 
+const ROLE_SHORT: Record<Role, string> = {
+  employee: "EMP",
+  hr_staff: "HR",
+  finance_staff: "FIN",
+  manager: "MGR",
+  admin: "ADM",
+};
+
 export function AppSidebar() {
   const { role, setRole } = useRole();
+  const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const sections = NAV[role];
-  const [switcherOpen, setSwitcherOpen] = useState(false);
+  const user = ROLE_USERS[role];
+
+  const handleLogout = () => {
+    toast.success("Logged out successfully");
+    navigate({ to: "/" });
+  };
 
   return (
     <aside className="hidden md:flex w-64 shrink-0 flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border">
-      <div className="flex items-center gap-2.5 px-5 h-16 border-b border-sidebar-border">
+      {/* Tiny role slider at very top */}
+      <div className="px-3 pt-3">
+        <div className="flex items-center gap-1 rounded-md bg-sidebar-accent/60 p-1">
+          {ROLES.map((r) => (
+            <button
+              key={r}
+              onClick={() => {
+                setRole(r);
+                navigate({ to: `/app/${r === "hr_staff" ? "hr" : r === "finance_staff" ? "finance" : r}` });
+              }}
+              title={ROLE_LABELS[r]}
+              className={cn(
+                "flex-1 px-1.5 py-1 text-[9px] font-semibold uppercase tracking-wider rounded transition-colors",
+                r === role
+                  ? "bg-sidebar-primary text-sidebar-primary-foreground shadow-sm"
+                  : "text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent"
+              )}
+            >
+              {ROLE_SHORT[r]}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Branding */}
+      <div className="flex items-center gap-2.5 px-5 h-16 mt-2 border-b border-sidebar-border">
         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
           <Building2 className="h-5 w-5" />
         </div>
@@ -81,35 +121,18 @@ export function AppSidebar() {
         </div>
       </div>
 
-      <div className="px-3 py-3 border-b border-sidebar-border">
-        <button
-          onClick={() => setSwitcherOpen((v) => !v)}
-          className="w-full flex items-center justify-between rounded-lg bg-sidebar-accent px-3 py-2.5 text-left hover:bg-sidebar-accent/80 transition-colors"
-        >
-          <div>
-            <p className="text-[10px] uppercase tracking-wider text-sidebar-foreground/60">Active Role</p>
-            <p className="text-sm font-medium mt-0.5">{ROLE_LABELS[role]}</p>
-          </div>
-          <ChevronDown className={cn("h-4 w-4 transition-transform", switcherOpen && "rotate-180")} />
-        </button>
-        {switcherOpen && (
-          <div className="mt-2 grid gap-1">
-            {ROLES.map((r) => (
-              <button
-                key={r}
-                onClick={() => { setRole(r); setSwitcherOpen(false); }}
-                className={cn(
-                  "text-left px-3 py-2 text-xs rounded-md transition-colors",
-                  r === role ? "bg-sidebar-primary text-sidebar-primary-foreground" : "hover:bg-sidebar-accent text-sidebar-foreground/80"
-                )}
-              >
-                {ROLE_LABELS[r]}
-              </button>
-            ))}
-          </div>
-        )}
+      {/* User profile */}
+      <div className="px-4 py-4 border-b border-sidebar-border flex items-center gap-3">
+        <div className="h-10 w-10 rounded-full bg-gradient-to-br from-sidebar-primary to-sidebar-primary/60 text-sidebar-primary-foreground flex items-center justify-center text-sm font-semibold shrink-0">
+          {user.avatar}
+        </div>
+        <div className="min-w-0">
+          <p className="text-sm font-medium truncate">{user.name}</p>
+          <p className="text-[11px] text-sidebar-foreground/60 truncate">{user.position}</p>
+        </div>
       </div>
 
+      {/* Nav */}
       <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-5">
         {sections.map((sec) => (
           <div key={sec.section}>
@@ -139,8 +162,28 @@ export function AppSidebar() {
         ))}
       </nav>
 
-      <div className="border-t border-sidebar-border p-4 text-[11px] text-sidebar-foreground/50">
-        v2.4.1 · © NusaCorp 2026
+      {/* Profile & logout */}
+      <div className="border-t border-sidebar-border p-3 space-y-1">
+        <Link
+          to="/app/profile"
+          className={cn(
+            "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
+            pathname === "/app/profile"
+              ? "bg-sidebar-primary text-sidebar-primary-foreground"
+              : "text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-foreground"
+          )}
+        >
+          <User className="h-4 w-4" />
+          <span>Profile Saya</span>
+        </Link>
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center gap-3 rounded-md px-3 py-2 text-sm text-red-400 hover:bg-red-500/10 transition-colors"
+        >
+          <LogOut className="h-4 w-4" />
+          <span>Logout</span>
+        </button>
+        <p className="px-3 pt-2 text-[10px] text-sidebar-foreground/40">v2.4.1 · © NusaCorp 2026</p>
       </div>
     </aside>
   );
