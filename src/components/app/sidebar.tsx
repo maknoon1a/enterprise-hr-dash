@@ -1,5 +1,5 @@
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
-import { useRole, ROLE_LABELS, ROLES } from "@/lib/role-context";
+import { useRole } from "@/lib/role-context";
 import { ROLE_USERS } from "@/lib/data";
 import type { Role } from "@/lib/types";
 import {
@@ -64,16 +64,8 @@ const NAV: Record<Role, { section: string; items: NavItem[] }[]> = {
   ],
 };
 
-const ROLE_SHORT: Record<Role, string> = {
-  employee: "EMP",
-  hr_staff: "HR",
-  finance_staff: "FIN",
-  manager: "MGR",
-  admin: "ADM",
-};
-
 export function AppSidebar() {
-  const { role, setRole } = useRole();
+  const { role } = useRole();
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const sections = NAV[role];
@@ -86,32 +78,8 @@ export function AppSidebar() {
 
   return (
     <aside className="hidden md:flex w-64 shrink-0 flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border">
-      {/* Tiny role slider at very top */}
-      <div className="px-3 pt-3">
-        <div className="flex items-center gap-1 rounded-md bg-sidebar-accent/60 p-1">
-          {ROLES.map((r) => (
-            <button
-              key={r}
-              onClick={() => {
-                setRole(r);
-                navigate({ to: `/app/${r === "hr_staff" ? "hr" : r === "finance_staff" ? "finance" : r}` });
-              }}
-              title={ROLE_LABELS[r]}
-              className={cn(
-                "flex-1 px-1.5 py-1 text-[9px] font-semibold uppercase tracking-wider rounded transition-colors",
-                r === role
-                  ? "bg-sidebar-primary text-sidebar-primary-foreground shadow-sm"
-                  : "text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent"
-              )}
-            >
-              {ROLE_SHORT[r]}
-            </button>
-          ))}
-        </div>
-      </div>
-
       {/* Branding */}
-      <div className="flex items-center gap-2.5 px-5 h-16 mt-2 border-b border-sidebar-border">
+      <div className="flex items-center gap-2.5 px-5 h-16 border-b border-sidebar-border">
         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
           <Building2 className="h-5 w-5" />
         </div>
